@@ -49,6 +49,9 @@
             labelWidth: {
                 type: Number
             },
+            labelStyle:{
+                type:Object
+            },
             prop: {
                 type: String
             },
@@ -125,7 +128,7 @@
                 }
             },
             labelStyles () {
-                let style = {};
+                let style = this.labelStyle||{};
                 const labelWidth = this.labelWidth || this.form.labelWidth;
                 if (labelWidth) {
                     style.width = `${labelWidth}px`;
