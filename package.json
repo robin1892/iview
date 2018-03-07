@@ -1,7 +1,7 @@
 {
-  "name": "iview",
-  "version": "2.9.2",
-  "title": "iView",
+  "name": "iviewx",
+  "version": "1.0.2",
+  "title": "iViewX",
   "description": "A high quality  UI components Library with Vue.js",
   "homepage": "http://www.iviewui.com",
   "keywords": [
@@ -32,12 +32,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/iview/iview"
+    "url": "https://github.com/robin1892/iviewx"
   },
-  "author": "Aresn",
+  "author": "Robin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/iview/iview/issues"
+    "url": "https://github.com/robin1892/iviewx/issues"
   },
   "dependencies": {
     "async-validator": "^1.8.2",
