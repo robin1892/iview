@@ -50,7 +50,7 @@
                 type: Number
             },
             labelStyle:{
-                type:Object
+                type:String
             },
             prop: {
                 type: String
@@ -128,7 +128,7 @@
                 }
             },
             labelStyles () {
-                let style = this.labelStyle||{};
+                let style = this.labelStyle?JSON.parse(this.labelStyle):{};
                 const labelWidth = this.labelWidth || this.form.labelWidth;
                 if (labelWidth) {
                     style.width = `${labelWidth}px`;

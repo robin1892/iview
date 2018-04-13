@@ -2,10 +2,23 @@
     <div :class="classes" ref="cell">
         <template v-if="renderType === 'index'">{{naturalIndex + 1}}</template>
         <template v-if="renderType === 'selection'">
-            <Checkbox :value="checked" @click.native.stop="handleClick" @on-change="toggleSelect" :disabled="disabled"></Checkbox>
+            <Checkbox :value="checked" @click.native.stop="handleClick" @on-change="toggleSelect" :disabled="disabled"></Checkbox>{{naturalIndex + 1}}
+        </template>
+        <template v-if="renderType === 'selectlink'">
+            <span>
+                <Checkbox :value="checked" @click.native.stop="handleClick" @on-change="toggleSelect" :disabled="disabled"></Checkbox>
+                <a @click="handleAClick" >{{naturalIndex + 1}}</a>
+            </span>
         </template>
         <template v-if="renderType === 'html'"><span v-html="row[column.key]"></span></template>
+        <template v-if="renderType === 'input'"><Input v-model="row[column.key]" :icon="column.icon" @on-click="colClick"></Input></template>
+        <template v-if="renderType === 'select'">
+            <Select  v-model="row[column.key+'-real']">
+                    <Option v-for="opti in column.values" :value="opti.value" :key="opti.id">{{ opti.description }}</Option>
+            </Select>
+        </template>
         <template v-if="renderType === 'normal'"><span>{{row[column.key]}}</span></template>
+        
         <template v-if="renderType === 'expand' && !row._disableExpand">
             <div :class="expandCls" @click="toggleExpand">
                 <Icon type="ios-arrow-right"></Icon>
@@ -23,6 +36,7 @@
     import Cell from './expand';
     import Icon from '../icon/icon.vue';
     import Checkbox from '../checkbox/checkbox.vue';
+    import Input from '../input'
 
     export default {
         name: 'TableCell',
@@ -69,6 +83,11 @@
             }
         },
         methods: {
+            colClick(){
+                if(this.column.OnFKClick){
+                    this.column.OnFKClick(this.row,this.index);
+                }
+            },
             toggleSelect () {
                 this.$parent.$parent.$parent.toggleSelect(this.index);
             },
@@ -77,6 +96,11 @@
             },
             handleClick () {
                 // 放置 Checkbox 冒泡
+            },
+            handleAClick(){
+                if(this.column.idRefScript){
+                    this.column.idRefScript(this.row[this.column.key]);
+                }
             }
         },
         created () {
@@ -90,6 +114,12 @@
                 this.renderType = 'expand';
             } else if (this.column.render) {
                 this.renderType = 'render';
+            } else if(this.column.type === 'input'){
+                this.renderType = 'input';
+            } else if(this.column.type === 'select'){
+                this.renderType = 'select';
+            }else if(this.column.type === 'selectlink'){
+                this.renderType = 'selectlink';
             } else {
                 this.renderType = 'normal';
             }

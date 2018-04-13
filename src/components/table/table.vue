@@ -139,6 +139,9 @@
                 type: Boolean,
                 default: false
             },
+            rowChange:{
+                type: Function
+            },
             showHeader: {
                 type: Boolean,
                 default: true
@@ -337,6 +340,9 @@
         methods: {
             rowClsName (index) {
                 return this.rowClassName(this.data[index], index);
+            },
+            handleRowChange(newRow,oldRow){
+                if(this.rowChange)this.rowChange(newRow,oldRow);
             },
             handleResize () {
                 this.$nextTick(() => {

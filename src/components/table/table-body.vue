@@ -60,6 +60,37 @@
                 default: false
             }
         },
+        watch:{
+            data:{
+                handler(newValue,oldValue){
+                    let nl=newValue.length;
+                    let ol=oldValue.length;
+                    let min=Math.min(nl,ol);
+                    if(nl<ol){
+                        for(let i= ol-1;i>=0;i--){
+                            this.$parent.handleRowChange(null,oldValue[i]);
+                        }
+                    }else if(nl>ol){
+                        for(let i= nl-1;i>=0;i--){
+                            this.$parent.handleRowChange(newValue[i],null);
+                        }
+                    }
+                    for (let i = 0; i < min; i++) {
+                       let modify=false;
+                       for(let prop in newValue[i]){
+                          if(newValue[i][prop]!=oldValue[i][prop]){
+                              modify=true;
+                              break;
+                          }
+                       }
+        　　　　　　　　if (modify) {
+        　　　　　　　　　　this.$parent.handleRowChange(newValue[i],oldValue[i]);
+        　　　　　　　　}
+        　　　　　　}
+                },
+                deep:true
+            }
+        },
         computed: {
             expandRender () {
                 let render = function () {
