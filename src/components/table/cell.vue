@@ -104,6 +104,7 @@
             }
         },
         created () {
+            
             if (this.column.type === 'index') {
                 this.renderType = 'index';
             } else if (this.column.type === 'selection') {
@@ -117,6 +118,9 @@
             } else if(this.column.type === 'input'){
                 this.renderType = 'input';
             } else if(this.column.type === 'select'){
+                console.log("CELL----COLUMN---FOR SELECT-----SHOW---")
+                console.log(JSON.stringify(this.column));
+                console.log("CELL----COLUMN---FOR SELECT-----END----");
                 this.renderType = 'select';
             }else if(this.column.type === 'selectlink'){
                 this.renderType = 'selectlink';
